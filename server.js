@@ -1,42 +1,29 @@
 const express = require('express');
-const axios = require('axios');
+const cron = require('node-cron');
 const app = express();
 const port = 3000;
 const key = require('./apiKey');
+const { getLines } = require('./getLines');
 const apiKey = key.apiKey;
 
 
-app.get('/', (req, res) => res.send('Hello World!'));
+let linesHolder = [];
+let sportsInSeason = ['americanfootball_nfl', 'basketball_nba', 'basketball_ncaab'];
 
-app.get('/sports', async (req, res) => {
-  try {
-    const { data } = await axios.get('https://api.the-odds-api.com/v3/sports', {
-      params: {
-        api_key: apiKey
-      }
-    });
-    res.send(data.data);
-  } catch(err) {
-    console.error(err);
-    res.sendStatus(500);
-  }
-})
 
-app.get('/nfl_moneyline', async (req, res) => {
-  try {
-    const { data } = await axios.get('https://api.the-odds-api.com/v3/odds', {
-      params: {
-          api_key: apiKey,
-          sport: 'americanfootball_nfl',
-          region: 'us',
-          mkt: 'h2h'
-      }
-    })
-    res.send(data.data)
-  } catch(err) {
-    console.error(err);
-    res.sendStatus(500);
-  }
-})
+app.get('/', (req, res) => res.send('Betting lines is live!'));
 
 app.listen(port, () => console.log(`Betting lines listening on port ${port}!`));
+
+//cron job to control when email is sent
+cron.schedule('* * * * *', async () => {
+
+  let betsObject = {};
+
+  for (const sport of sportsInSeason) {
+    betsObject[sport] = await getLines(apiKey, sport);
+  }
+
+  console.log(betsObject);
+
+});

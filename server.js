@@ -4,10 +4,10 @@ const app = express();
 const port = 3000;
 const key = require('./apiKey');
 const { getLines } = require('./getLines');
+const { convertOdds } = require('./convertOdds');
 const apiKey = key.apiKey;
 
 
-let linesHolder = [];
 let sportsInSeason = ['americanfootball_nfl', 'basketball_nba', 'basketball_ncaab'];
 
 
@@ -24,6 +24,7 @@ cron.schedule('* * * * *', async () => {
     betsObject[sport] = await getLines(apiKey, sport);
   }
 
+  betsObject = convertOdds(betsObject);
   console.log(betsObject);
 
 });

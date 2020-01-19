@@ -67,11 +67,11 @@ for (const sport in data) {
       <tr>
         <td>${game.time.slice(0, game.time.indexOf(':', 3)) + game.time.slice(game.time.indexOf('M') - 2)}</td>
         <td>${game.homeTeam}</td>
-        <td>${game.homeML}</td>
-        <td ${game.homeSpread ? game.homeSpread.includes('-') ? `class="negative"` : `class="positive"` : null}>${game.homeSpread ? game.homeSpread.includes('-') ? game.homeSpread : '+' + game.homeSpread : 'N/A'}</td>
+        <td ${game.homeML !== 'N/A' ? game.homeML.includes('-') ? `class="negative"` : `class="positive"` : null}>${game.homeML}</td>
+        <td ${game.homeSpread !== 'N/A' ? game.homeSpread.includes('-') ? `class="negative"` : `class="positive"` : null}>${game.homeSpread ? game.homeSpread.includes('-') || game.homeSpread.includes('N/A') ? game.homeSpread : '+' + game.homeSpread : 'N/A'}</td>
         <td>${game.awayTeam}</td>
-        <td>${game.awayML}</td>
-        <td ${game.awaySpread ? game.awaySpread.includes('-') ? `class="negative"` : `class="positive"` : null}>${game.awaySpread ? game.awaySpread.includes('-') ? game.awaySpread : '+' + game.awaySpread : 'N/A'}</td>
+        <td ${game.awayML !== 'N/A' ? game.awayML.includes('-') ? `class="negative"` : `class="positive"` : null}>${game.awayML}</td>
+        <td ${game.awaySpread !== 'N/A' ? game.awaySpread.includes('-') ? `class="negative"` : `class="positive"` : null}>${game.awaySpread ? game.awaySpread.includes('-') || game.homeSpread.includes('N/A') ? game.awaySpread : '+' + game.awaySpread : 'N/A'}</td>
         <td>${game.overUnder}</td>
       </tr>
     `
@@ -86,10 +86,10 @@ for (const sport in data) {
 }
 
 var mailOptions = {
-  from: 'hammer.the.over.2020@gmail.com',
-  to: 'jmmadsen16@gmail.com',
+  from: 'daily.bets.2020@gmail.com',
+  bcc: 'jmmadsen16@gmail.com, jmm2cr@virginia.edu',
   subject: `Bets for ${new Date().toLocaleDateString()}`,
-  text: 'That was easy!',
+  text: `Bets for ${new Date().toLocaleDateString()}`,
   html: html
 };
 

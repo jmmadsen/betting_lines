@@ -36,8 +36,12 @@ const getLines = async (apiKey, sport) => {
         return {
           time: new Date(game.commence_time * 1000).toLocaleString().slice(new Date(game.commence_time * 1000).toLocaleString().indexOf(',') + 2),
           homeTeam: game.home_team,
+          homeML: 'N/A',
+          homeSpread: 'N/A',
           awayTeam: game.teams.filter(team => team !== game.home_team)[0],
-          odds: 'N/A'
+          awayML: 'N/A',
+          awaySpread: 'N/A',
+          overUnder: 'N/A'
         }
       }
   
@@ -51,15 +55,20 @@ const getLines = async (apiKey, sport) => {
         awaySpread: spreads.data.data.filter(spreadsGame => spreadsGame.home_team === game.home_team)[0].sites[0].odds.spreads.points[game.teams.findIndex(team => team !== game.home_team)],
         overUnder: totals.data.data.filter(ouGame => ouGame.home_team === game.home_team)[0].sites[0].odds.totals.points[0].toString()
       }
+
     } catch(err) {
-      // TODO - sometimes ML doesn't have odds, but other ones do
+
       return {
         time: new Date(game.commence_time * 1000).toLocaleString().slice(new Date(game.commence_time * 1000).toLocaleString().indexOf(',') + 2),
         homeTeam: game.home_team,
+        homeML: 'N/A',
+        homeSpread: 'N/A',
         awayTeam: game.teams.filter(team => team !== game.home_team)[0],
-        odds: 'N/A',
-        errorGettingData: true
+        awayML: 'N/A',
+        awaySpread: 'N/A',
+        overUnder: 'N/A'
       }
+
     }
 
   });

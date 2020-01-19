@@ -1,0 +1,8 @@
+{
+  "name": "betting_lines",
+  "description": "daily mailing list for sports bets",
+  "version": "1.0.0",
+  "engines": {
+    "node": "12.4.0"
+  }
+}

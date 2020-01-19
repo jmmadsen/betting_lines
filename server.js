@@ -16,7 +16,7 @@ let sportsInSeason = ['americanfootball_nfl', 'basketball_nba', 'basketball_ncaa
 
 
 // cron job to control when email is sent
-cron.schedule('* * * * *', async () => {
+cron.schedule('* * 19 * *', async () => {
 
   let betsObject = {};
 

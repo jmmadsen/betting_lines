@@ -28,7 +28,7 @@ cron.schedule('* * * * *', async () => {
   betsObject = convertOdds(betsObject);
   
   // sends email
-  sendEmail(betsObject);
+  sendEmail(betsObject, mailList);
 
 });
 

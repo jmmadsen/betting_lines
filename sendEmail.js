@@ -2,7 +2,7 @@ var nodemailer = require('nodemailer');
 const { password } = require('./password');
 
 
-const sendEmail = (betsObject) => {
+const sendEmail = (betsObject, mailList) => {
 
   // login to email account created for sending daily lines
   var transporter = nodemailer.createTransport({
@@ -88,7 +88,7 @@ const sendEmail = (betsObject) => {
 
   var mailOptions = {
     from: 'daily.bets.2020@gmail.com',
-    bcc: 'jmmadsen16@gmail.com, jmm2cr@virginia.edu, mjmadsen7343@gmail.com',
+    bcc: mailList.join(', '),
     subject: `Bets for ${new Date().toLocaleDateString()}`,
     text: `Bets for ${new Date().toLocaleDateString()}`,
     html: html

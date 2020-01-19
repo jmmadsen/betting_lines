@@ -5,6 +5,7 @@ const port = 3000;
 const key = require('./apiKey');
 const { getLines } = require('./getLines');
 const { convertOdds } = require('./convertOdds');
+const { sendEmail } = require('./sendEmail');
 const apiKey = key.apiKey;
 
 
@@ -24,7 +25,10 @@ cron.schedule('* * * * *', async () => {
     betsObject[sport] = await getLines(apiKey, sport);
   }
 
+  // converts ML odds to traditional US ML figures
   betsObject = convertOdds(betsObject);
-  console.log(betsObject);
+  
+  // sends email
+  sendEmail(betsObject);
 
 });

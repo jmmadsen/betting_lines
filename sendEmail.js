@@ -20,6 +20,12 @@ let html =
     table, th, td {
       border: 1px solid black;
     }
+    td.negative {
+      color: green;
+    }
+    td.positive {
+      color: red;
+    }
     </style>
   </head>
   <body>
@@ -47,11 +53,11 @@ for (const sport in data) {
     <tr>
       <th>Time</th>
       <th>Home Team</th>
-      <th>Home ML</th>
-      <th>Home Spread</th>
+      <th>ML</th>
+      <th>Spread</th>
       <th>Away Team</th>
-      <th>Away ML</th>
-      <th>Away Spread</th>
+      <th>ML</th>
+      <th>Spread</th>
       <th>Over/Under</th>
     </tr>
   `
@@ -59,13 +65,13 @@ for (const sport in data) {
     html = html + 
     `
       <tr>
-        <td>${game.time}</td>
+        <td>${game.time.slice(0, game.time.indexOf(':', 3)) + game.time.slice(game.time.indexOf('M') - 2)}</td>
         <td>${game.homeTeam}</td>
         <td>${game.homeML}</td>
-        <td>${game.homeSpread}</td>
+        <td ${game.homeSpread ? game.homeSpread.includes('-') ? `class="negative"` : `class="positive"` : null}>${game.homeSpread ? game.homeSpread.includes('-') ? game.homeSpread : '+' + game.homeSpread : 'N/A'}</td>
         <td>${game.awayTeam}</td>
         <td>${game.awayML}</td>
-        <td>${game.awaySpread}</td>
+        <td ${game.awaySpread ? game.awaySpread.includes('-') ? `class="negative"` : `class="positive"` : null}>${game.awaySpread ? game.awaySpread.includes('-') ? game.awaySpread : '+' + game.awaySpread : 'N/A'}</td>
         <td>${game.overUnder}</td>
       </tr>
     `

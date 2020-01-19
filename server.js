@@ -9,14 +9,13 @@ const { sendEmail } = require('./sendEmail');
 const apiKey = key.apiKey;
 
 
+let mailList = ['jmmadsen16@gmail.com'];
 let sportsInSeason = ['americanfootball_nfl', 'basketball_nba', 'basketball_ncaab'];
 
 
-app.get('/', (req, res) => res.send('Betting lines is live!'));
 
-app.listen(port, () => console.log(`Betting lines listening on port ${port}!`));
 
-//cron job to control when email is sent
+// cron job to control when email is sent
 cron.schedule('* * * * *', async () => {
 
   let betsObject = {};
@@ -32,3 +31,57 @@ cron.schedule('* * * * *', async () => {
   sendEmail(betsObject);
 
 });
+
+
+
+
+// below is routing for express.js
+app.get('/', (req, res) => res.send('Betting lines is live!'));
+
+// sends current sportsInSeason array
+app.get('/sports_in_season', (req, res) => res.send(sportsInSeason));
+
+// adds sports to sportsInSeason array
+app.post('/add_sport_in_season', (req, res) => {
+  try {
+    sportsInSeason.push(req.query.sport);
+    res.sendStatus(200);
+  } catch(err) {
+    res.send(err);
+  }
+})
+
+// remove a sport from sportsInSeason array
+app.delete('/remove_sport_in_season', (req, res) => {
+  try {
+    sportsInSeason = sportsInSeason.filter(sport => sport !== req.query.sport);
+    res.sendStatus(200);
+  } catch(err) {
+    res.send(err);
+  }
+})
+
+// sends current mailList array
+app.get('/mail_list', (req, res) => res.send(mailList));
+
+// adds email to emailList array
+app.post('/add_email', (req, res) => {
+  try {
+    mailList.push(req.query.email);
+    res.sendStatus(200);
+  } catch(err) {
+    res.send(err);
+  }
+})
+
+// remove a email from mailList array
+app.delete('/remove_email', (req, res) => {
+  try {
+    mailList = mailList.filter(email => email !== req.query.email);
+    res.sendStatus(200);
+  } catch(err) {
+    res.send(err);
+  }
+})
+
+app.listen(port, () => console.log(`Betting lines listening on port ${port}!`));

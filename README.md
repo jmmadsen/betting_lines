@@ -8,6 +8,6 @@ If you would like to be added to the email list, let me know!
   ------------------
   
 
-Test locally by running ```heroku local```
+Test locally by running ```heroku local```, use heroku cli
 
 TODO - add Postgres, create Docker image

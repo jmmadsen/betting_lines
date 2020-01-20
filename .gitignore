@@ -1,3 +1,4 @@
 apiKey.js
 password.js
 node_modules
+.env

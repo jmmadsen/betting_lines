@@ -1,5 +1,5 @@
 var nodemailer = require('nodemailer');
-// let { password } = require('./password');
+
 
 // gets heroku env variable and uses that, else if local uses local file
 const password = process.env.password;

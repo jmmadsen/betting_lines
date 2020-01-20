@@ -2,10 +2,10 @@ const express = require('express');
 const cron = require('node-cron');
 const app = express();
 const port = 3000;
-// const key = require('./apiKey');
 const { getLines } = require('./getLines');
 const { convertOdds } = require('./convertOdds');
 const { sendEmail } = require('./sendEmail');
+
 
 // gets heroku env variable and uses that, else if local uses local file
 const apiKey = process.env.apiKey;
@@ -87,8 +87,3 @@ app.delete('/remove_email', (req, res) => {
 })
 
 app.listen(process.env.PORT || port, () => console.log(`Betting lines listening on port ${process.env.PORT ? process.env.PORT : port}!`));
-
-
-
-// https://agile-journey-20831.herokuapp.com/ <------ url
-// run app locally with "heroku local"

@@ -18,9 +18,7 @@ let sportsInSeason = ['americanfootball_nfl', 'basketball_nba', 'basketball_ncaa
 
 
 // cron job to control when email is sent
-cron.schedule('* 15 20 * *', async () => {
-
-  console.log(new Date())
+cron.schedule('* 20 20 * *', async () => {
 
   let betsObject = {};
 
@@ -90,4 +88,4 @@ app.delete('/remove_email', (req, res) => {
   }
 })
 
-app.listen(process.env.PORT || port, () => console.log(`Betting lines listening on port ${process.env.PORT ? process.env.PORT : port}!`));
+app.listen(process.env.PORT || port, () => console.log(`Betting lines listening on port ${process.env.PORT ? process.env.PORT : port}! ${new Date()}`));

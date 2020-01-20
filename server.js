@@ -6,7 +6,9 @@ const key = require('./apiKey');
 const { getLines } = require('./getLines');
 const { convertOdds } = require('./convertOdds');
 const { sendEmail } = require('./sendEmail');
-const apiKey = key.apiKey;
+
+// gets heroku env variable and uses that, else if local uses local file
+const apiKey = process.env.apiKey ? process.env.apiKey : key.apiKey;
 
 
 let mailList = ['jmmadsen16@gmail.com'];
@@ -16,7 +18,7 @@ let sportsInSeason = ['americanfootball_nfl', 'basketball_nba', 'basketball_ncaa
 
 
 // cron job to control when email is sent
-cron.schedule('* * 19 * *', async () => {
+cron.schedule('* * 21 * *', async () => {
 
   let betsObject = {};
 

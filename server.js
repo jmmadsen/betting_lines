@@ -86,7 +86,7 @@ app.delete('/remove_email', (req, res) => {
   }
 })
 
-app.listen(port, () => console.log(`Betting lines listening on port ${port}!`));
+app.listen(process.env.PORT || port, () => console.log(`Betting lines listening on port ${process.env.PORT ? process.env.PORT : port}!`));
 
 
 

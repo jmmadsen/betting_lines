@@ -18,7 +18,9 @@ let sportsInSeason = ['americanfootball_nfl', 'basketball_nba', 'basketball_ncaa
 
 
 // cron job to control when email is sent
-cron.schedule('* 9 20 * *', async () => {
+cron.schedule('* 15 20 * *', async () => {
+
+  console.log(new Date())
 
   let betsObject = {};
 
@@ -32,6 +34,8 @@ cron.schedule('* 9 20 * *', async () => {
   // sends email
   sendEmail(betsObject, mailList);
 
+},{
+  timezone: "America/New_York"
 });
 
 

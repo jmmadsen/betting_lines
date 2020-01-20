@@ -38,6 +38,14 @@ cron.schedule('00 00 8 * * *', async () => {
 
 
 
+// middleware to apply password protection to routes
+app.use((req, res, next) => {
+  if (!req.query.password || req.query.password !== process.env.ROUTE_PASSWORD) {
+    res.end('Incorrect password');
+  } else {
+    next();
+  }
+})
 
 // below is routing for express.js
 app.get('/', (req, res) => res.send('Betting lines is live!'));

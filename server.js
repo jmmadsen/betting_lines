@@ -38,6 +38,7 @@ cron.schedule('00 00 10 * * *', async () => {
 
 
 
+
 // middleware to apply password protection to routes
 app.use((req, res, next) => {
   if (!req.query.password || req.query.password !== process.env.ROUTE_PASSWORD) {
@@ -94,6 +95,23 @@ app.delete('/remove_email', (req, res) => {
   } catch(err) {
     res.send(err);
   }
+})
+
+// route to manually trigger testing while hosted in heroku
+app.post('/test_email', async (req, res) => {
+  let betsObject = {};
+
+  for (const sport of sportsInSeason) {
+    betsObject[sport] = await getLines(apiKey, sport);
+  }
+
+  // converts ML odds to traditional US ML figures
+  betsObject = convertOdds(betsObject);
+  
+  // sends email
+  sendEmail(betsObject, mailList);
+
+  res.sendStatus(200);
 })
 
 app.listen(process.env.PORT || port, () => console.log(`Betting lines listening on port ${process.env.PORT ? process.env.PORT : port}!`));

@@ -35,7 +35,7 @@ const getLines = async (apiKey, sport) => {
     try {
       if (game.sites.length === 0) {
         return {
-          time: new Date(game.commence_time * 1000).toLocaleString('en', { timeZone: 'America/New_York' }).slice(new Date(game.commence_time * 1000).toLocaleString().indexOf(',') + 2),
+          time: new Date(game.commence_time * 1000).toLocaleString('en', { timeZone: 'America/New_York' }).slice(new Date(game.commence_time * 1000).toLocaleString().indexOf(',') + 2).toString() + ' (' + new Date(game.commence_time * 1000).toLocaleDateString().slice(0, new Date(game.commence_time * 1000).toLocaleDateString().indexOf('2020') - 1).toString() + ')',
           homeTeam: game.home_team,
           homeML: 'N/A',
           homeSpread: 'N/A',
@@ -47,7 +47,7 @@ const getLines = async (apiKey, sport) => {
       }
   
       return {
-        time: new Date(game.commence_time * 1000).toLocaleString('en', { timeZone: 'America/New_York' }).slice(new Date(game.commence_time * 1000).toLocaleString().indexOf(',') + 2),
+        time: new Date(game.commence_time * 1000).toLocaleString('en', { timeZone: 'America/New_York' }).slice(new Date(game.commence_time * 1000).toLocaleString().indexOf(',') + 2).toString() + ' (' + new Date(game.commence_time * 1000).toLocaleDateString().slice(0, new Date(game.commence_time * 1000).toLocaleDateString().indexOf('2020') - 1).toString() + ')',
         homeTeam: game.home_team,
         homeML: game.sites[0].odds.h2h[game.teams.findIndex(team => team === game.home_team)].toString(),
         homeSpread: spreads.data.data.filter(spreadsGame => spreadsGame.home_team === game.home_team)[0].sites[0].odds.spreads.points[game.teams.findIndex(team => team === game.home_team)],
@@ -60,7 +60,7 @@ const getLines = async (apiKey, sport) => {
     } catch(err) {
 
       return {
-        time: new Date(game.commence_time * 1000).toLocaleString().slice(new Date(game.commence_time * 1000).toLocaleString().indexOf(',') + 2),
+        time: new Date(game.commence_time * 1000).toLocaleString('en', { timeZone: 'America/New_York' }).slice(new Date(game.commence_time * 1000).toLocaleString().indexOf(',') + 2).toString() + ' (' + new Date(game.commence_time * 1000).toLocaleDateString().slice(0, new Date(game.commence_time * 1000).toLocaleDateString().indexOf('2020') - 1).toString() + ')',
         homeTeam: game.home_team,
         homeML: 'N/A',
         homeSpread: 'N/A',

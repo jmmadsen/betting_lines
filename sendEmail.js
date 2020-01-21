@@ -96,6 +96,15 @@ const sendEmail = (betsObject, mailList) => {
 
   }
 
+  html = html + 
+  `
+    </br>
+    </br>
+    </br>
+    <a href="https://github.com/jmmadsen/betting_lines">Click here to see the code for this application</a>
+    </br>
+  `
+
   var mailOptions = {
     from: 'daily.bets.2020@gmail.com',
     bcc: mailList.join(', '),

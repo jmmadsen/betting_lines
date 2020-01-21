@@ -48,6 +48,9 @@ const sendEmail = (betsObject, mailList) => {
       case 'basketball_ncaab':
         sportName = 'NCAAM';
         break;
+      case 'icehockey_nhl':
+        sportName = 'NHL';
+        break;
     }
 
     html = html + 

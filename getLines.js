@@ -49,12 +49,12 @@ const getLines = async (apiKey, sport) => {
       return {
         time: new Date(game.commence_time * 1000).toLocaleString('en', { timeZone: 'America/New_York' }).slice(new Date(game.commence_time * 1000).toLocaleString().indexOf(',') + 2).toString() + ' (' + new Date(game.commence_time * 1000).toLocaleDateString().slice(0, new Date(game.commence_time * 1000).toLocaleDateString().indexOf('2020') - 1).toString() + ')',
         homeTeam: game.home_team,
-        homeML: game.sites[0].odds.h2h[game.teams.findIndex(team => team === game.home_team)].toString(),
-        homeSpread: spreads.data.data.filter(spreadsGame => spreadsGame.home_team === game.home_team)[0].sites[0].odds.spreads.points[game.teams.findIndex(team => team === game.home_team)],
+        homeML: game.sites.length ? game.sites[0].odds.h2h[game.teams.findIndex(team => team === game.home_team)].toString() : 'N/A',
+        homeSpread: spreads.data.data.filter(spreadsGame => spreadsGame.home_team === game.home_team)[0].sites.length ? spreads.data.data.filter(spreadsGame => spreadsGame.home_team === game.home_team)[0].sites[0].odds.spreads.points[game.teams.findIndex(team => team === game.home_team)] : 'N/A',
         awayTeam: game.teams.filter(team => team !== game.home_team)[0],
-        awayML: game.sites[0].odds.h2h[game.teams.findIndex(team => team === game.home_team) === 0 ? 1 : 0].toString(),
-        awaySpread: spreads.data.data.filter(spreadsGame => spreadsGame.home_team === game.home_team)[0].sites[0].odds.spreads.points[game.teams.findIndex(team => team !== game.home_team)],
-        overUnder: totals.data.data.filter(ouGame => ouGame.home_team === game.home_team)[0].sites[0].odds.totals.points[0].toString()
+        awayML: game.sites.length ? game.sites[0].odds.h2h[game.teams.findIndex(team => team === game.home_team) === 0 ? 1 : 0].toString() : 'N/A',
+        awaySpread: spreads.data.data.filter(spreadsGame => spreadsGame.home_team === game.home_team)[0].sites.length ? spreads.data.data.filter(spreadsGame => spreadsGame.home_team === game.home_team)[0].sites[0].odds.spreads.points[game.teams.findIndex(team => team !== game.home_team)] : 'N/A',
+        overUnder: totals.data.data.filter(ouGame => ouGame.home_team === game.home_team)[0].sites.length ?  totals.data.data.filter(ouGame => ouGame.home_team === game.home_team)[0].sites[0].odds.totals.points[0].toString() : 'N/A'
       }
 
     } catch(err) {

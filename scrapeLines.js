@@ -71,7 +71,7 @@ const scrapeLines = async (sportsArr) => {
 
     }
 
-    // scrapes game times
+    // scrapes game times and convert from UTC to EST
     let timesHolder = [];
     $('.game-status-bar__gametime--positioned').each((i, elem) => {
 
@@ -139,6 +139,7 @@ const scrapeLines = async (sportsArr) => {
 
   let betsObj = {};
 
+  // loops through arr passed into function, and scrapes page for each sport
   for (const sport of sportsArr) {
     let url;
     switch(sport) {

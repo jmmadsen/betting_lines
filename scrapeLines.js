@@ -80,12 +80,10 @@ const scrapeLines = async (sportsArr) => {
         if ($(elem).text().includes('in')) {
           time = 'N/A';
         } else {
-          let today = new Date().toLocaleDateString();
-          today = ' (' + today.slice(0, today.indexOf('/', 3)) + ')';
           let text = $(elem).text()
           text = text.slice(text.indexOf(',') + 2, text.indexOf('M') + 1);
-          time = text + today;
-          time = tzConversion(time)[0] + time.slice(time.indexOf(':'), time.indexOf(' ')) + tzConversion(time)[1] + ' ' + time.slice(time.indexOf('('));
+          time = text;
+          time = tzConversion(time)[0] + time.slice(time.indexOf(':'), time.indexOf(' ')) + tzConversion(time)[1];
         }
       } else if ($(elem).text().slice(0, $(elem).text().indexOf('on') - 1).length > 10) {
         let temp = $(elem).text().slice(0, $(elem).text().indexOf('on') - 1);
@@ -93,10 +91,8 @@ const scrapeLines = async (sportsArr) => {
         time = temp;
         time = tzConversion(time)[0] + time.slice(time.indexOf(':'), time.indexOf(' ')) + tzConversion(time)[1] + ' ' + time.slice(time.indexOf('('));
       } else {
-        let today = new Date().toLocaleDateString();
-        today = ' (' + today.slice(0, today.indexOf('/', 3)) + ')';
-        time = $(elem).text().slice(0, $(elem).text().indexOf('on') - 1) + today;
-        time = tzConversion(time)[0] + time.slice(time.indexOf(':'), time.indexOf(' ')) + tzConversion(time)[1] + ' ' + time.slice(time.indexOf('('));
+        time = $(elem).text().slice(0, $(elem).text().indexOf('on') - 1);
+        time = tzConversion(time)[0] + time.slice(time.indexOf(':'), time.indexOf(' ')) + tzConversion(time)[1];
       }
       timesHolder.push(time);
 

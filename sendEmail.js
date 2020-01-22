@@ -21,10 +21,10 @@ const sendEmail = (betsObject, mailList) => {
     <head>
       <style>
       table, th, td {
-        border: 1px solid black;
+        border: 1px solid gray;
         margin: auto;
       }
-      h3, a {
+      h3 {
         text-align: center;
       }
       td.negative {
@@ -77,7 +77,7 @@ const sendEmail = (betsObject, mailList) => {
       html = html + 
       `
         <tr>
-          <td>${game.time}</td>
+          <td>${game.time.slice(0, game.time.indexOf('M') + 1)}</td>
           <td>${game.awayTeam}</td>
           <td ${game.awaySpread !== 'N/A' ? game.awaySpread.includes('-') ? `class="negative"` : `class="positive"` : null}>${game.awaySpread ? game.awaySpread.includes('-') || game.homeSpread.includes('N/A') ? game.awaySpread : '' + game.awaySpread : 'N/A'}</td>
           <td ${game.awayML !== 'N/A' ? game.awayML.includes('-') ? `class="negative"` : `class="positive"` : null}>${game.awayML}</td>
@@ -100,9 +100,11 @@ const sendEmail = (betsObject, mailList) => {
   html = html + 
   `
     <br>
-    <div>
+    <center>
+      <h4>Email jmmadsen16@gmail.com to request features, and to add or remove people from this email list</h4>
+      <h5>Coming Soon: Excel attachment with analytics for day's games (i.e. KenPom, etc.)</h5>
       <a href="https://github.com/jmmadsen/betting_lines">Click here to see the code for this application</a>
-    </div>
+    </center>
     </body>
   `
 

@@ -10,4 +10,11 @@ If you would like to be added to the email list, let me know!
 
 Test locally by running ```heroku local```, use heroku cli
 
-TODO - add Postgres, create Docker image
+TODO 
+
+-------------------
+
+- add Excel attachment with analytics (KenPom, etc.)
+- add dates to games that are not today
+- add Postgres 
+- create Docker image

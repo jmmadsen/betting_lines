@@ -4,7 +4,6 @@ var nodemailer = require('nodemailer');
 // gets heroku env variable and uses that, else if local uses local file
 const password = process.env.password;
 
-
 const sendEmail = (betsObject, mailList) => {
 
   // login to email account created for sending daily lines
@@ -23,6 +22,10 @@ const sendEmail = (betsObject, mailList) => {
       <style>
       table, th, td {
         border: 1px solid black;
+        margin: auto;
+      }
+      h3, a {
+        text-align: center;
       }
       td.negative {
         color: green;
@@ -90,19 +93,17 @@ const sendEmail = (betsObject, mailList) => {
     html = html + 
     `
     </table>
-    </br>
-    </body>
     `
 
   }
 
   html = html + 
   `
-    </br>
-    </br>
-    </br>
-    <a href="https://github.com/jmmadsen/betting_lines">Click here to see the code for this application</a>
-    </br>
+    <br>
+    <div>
+      <a href="https://github.com/jmmadsen/betting_lines">Click here to see the code for this application</a>
+    </div>
+    </body>
   `
 
   var mailOptions = {

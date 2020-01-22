@@ -1,36 +1,18 @@
 const express = require('express');
 const cron = require('node-cron');
 const app = express();
-const port = 3000;
-const { getLines } = require('./getLines');
 const { scrapeLines } = require('./scrapeLines');
-const { convertOdds } = require('./convertOdds');
 const { sendEmail } = require('./sendEmail');
-
-
-// gets heroku env variable and uses that, else if local uses local file
-const apiKey = process.env.apiKey;
 
 
 let mailList = ['jmmadsen16@gmail.com'];
 let sportsInSeason = ['americanfootball_nfl', 'basketball_nba', 'basketball_ncaab'];
 
-
-
-
 // cron job to control when email is sent
 cron.schedule('00 00 10 * * *', async () => {
 
-  // let betsObject = {};
-
-  // for (const sport of sportsInSeason) {
-  //   betsObject[sport] = await getLines(apiKey, sport);
-  // }
-
+  // scrapes daily odds from website
   let betsObject = await scrapeLines(sportsInSeason);
-
-  // converts ML odds to traditional US ML figures
-  // betsObject = convertOdds(betsObject);
   
   // sends email
   sendEmail(betsObject, mailList);
@@ -38,8 +20,6 @@ cron.schedule('00 00 10 * * *', async () => {
 },{
   timezone: "America/New_York"
 });
-
-
 
 
 // middleware to apply password protection to routes
@@ -102,17 +82,9 @@ app.delete('/remove_email', (req, res) => {
 
 // route to manually trigger testing while hosted in heroku
 app.post('/test_email', async (req, res) => {
-  // let betsObject = {};
 
-  // for (const sport of sportsInSeason) {
-  //   betsObject[sport] = await getLines(apiKey, sport);
-  // }
-
+  // scrapes daily odds from website
   let betsObject = await scrapeLines(sportsInSeason);
-  // console.log(betsObject);
-
-  // converts ML odds to traditional US ML figures
-  // betsObject = convertOdds(betsObject);
   
   // sends email
   sendEmail(betsObject, mailList);
@@ -120,4 +92,4 @@ app.post('/test_email', async (req, res) => {
   res.sendStatus(200);
 })
 
-app.listen(process.env.PORT || port, () => console.log(`Betting lines listening on port ${process.env.PORT ? process.env.PORT : port}!`));
+app.listen(process.env.PORT, () => console.log(`Betting lines listening on port ${process.env.PORT}!`));

@@ -4,6 +4,7 @@ const cheerio = require('cheerio');
 
 const scrapeLines = async (sportsArr) => {
 
+  // fetches html from url
   getHTML = async (url) => {
 
     try {
@@ -15,6 +16,7 @@ const scrapeLines = async (sportsArr) => {
   
   }
   
+  // uses cheerio and data cleansing to read in daily data
   getInfo = async (html) => {
   
     const $ = cheerio.load(html);
@@ -114,7 +116,6 @@ const scrapeLines = async (sportsArr) => {
 
     // tidy up 
     for (let game of games) {
-      // game.time = game.time.slice(game.time.indexOf(' ') + 1);
       game.awaySpread = game.awaySpread !== 'N/A' ? game.awaySpread.slice(0, game.awaySpread.indexOf('-', 1)) : 'N/A';
       game.homeSpread = game.homeSpread !== 'N/A' ? game.homeSpread.slice(0, game.homeSpread.indexOf('-', 1)) : 'N/A';
       game.overUnder = game.overUnder !== 'N/A' ? game.overUnder.slice(1, game.overUnder.indexOf('-')) : 'N/A';
@@ -148,10 +149,8 @@ const scrapeLines = async (sportsArr) => {
 
   }
 
-  // console.log(betsObj);
   return betsObj;
 
 }
 
 exports.scrapeLines = scrapeLines;
-// scrapeWebData(['americanfootball_nfl', 'basketball_nba', 'basketball_ncaab']);

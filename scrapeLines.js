@@ -47,8 +47,11 @@ const scrapeLines = async (sportsArr) => {
     tzConversion = (time) => {
 
       let newTime;
-      newTime = parseInt(time.slice(0, time.indexOf(':'))) -5;
+      newTime = parseInt(time.slice(0, time.indexOf(':'))) - 5;
       if (time.includes('AM')) {
+        if (newTime === 7) {
+          return [newTime.toString(), 'PM'];
+        }
         if (newTime > 0) {
           return [newTime.toString(), 'AM'];
         } else if (newTime === 0) {
@@ -74,7 +77,16 @@ const scrapeLines = async (sportsArr) => {
 
       let time;
       if (!$(elem).text().includes('on')) {
-        time = 'N/A';
+        if ($(elem).text().includes('in')) {
+          time = 'N/A';
+        } else {
+          let today = new Date().toLocaleDateString();
+          today = ' (' + today.slice(0, today.indexOf('/', 3)) + ')';
+          let text = $(elem).text()
+          text = text.slice(text.indexOf(',') + 2, text.indexOf('M') + 1);
+          time = text + today;
+          time = tzConversion(time)[0] + time.slice(time.indexOf(':'), time.indexOf(' ')) + tzConversion(time)[1] + ' ' + time.slice(time.indexOf('('));
+        }
       } else if ($(elem).text().slice(0, $(elem).text().indexOf('on') - 1).length > 10) {
         let temp = $(elem).text().slice(0, $(elem).text().indexOf('on') - 1);
         temp = temp.slice(temp.indexOf(', ') + 2) + ' (' + temp.slice(temp.indexOf(' ') + 1, temp.indexOf(',')) + ')';

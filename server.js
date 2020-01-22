@@ -3,6 +3,7 @@ const cron = require('node-cron');
 const app = express();
 const port = 3000;
 const { getLines } = require('./getLines');
+const { scrapeLines } = require('./scrapeLines');
 const { convertOdds } = require('./convertOdds');
 const { sendEmail } = require('./sendEmail');
 
@@ -20,14 +21,16 @@ let sportsInSeason = ['americanfootball_nfl', 'basketball_nba', 'basketball_ncaa
 // cron job to control when email is sent
 cron.schedule('00 00 10 * * *', async () => {
 
-  let betsObject = {};
+  // let betsObject = {};
 
-  for (const sport of sportsInSeason) {
-    betsObject[sport] = await getLines(apiKey, sport);
-  }
+  // for (const sport of sportsInSeason) {
+  //   betsObject[sport] = await getLines(apiKey, sport);
+  // }
+
+  let betsObject = await scrapeLines(sportsInSeason);
 
   // converts ML odds to traditional US ML figures
-  betsObject = convertOdds(betsObject);
+  // betsObject = convertOdds(betsObject);
   
   // sends email
   sendEmail(betsObject, mailList);
@@ -99,14 +102,17 @@ app.delete('/remove_email', (req, res) => {
 
 // route to manually trigger testing while hosted in heroku
 app.post('/test_email', async (req, res) => {
-  let betsObject = {};
+  // let betsObject = {};
 
-  for (const sport of sportsInSeason) {
-    betsObject[sport] = await getLines(apiKey, sport);
-  }
+  // for (const sport of sportsInSeason) {
+  //   betsObject[sport] = await getLines(apiKey, sport);
+  // }
+
+  let betsObject = await scrapeLines(sportsInSeason);
+  // console.log(betsObject);
 
   // converts ML odds to traditional US ML figures
-  betsObject = convertOdds(betsObject);
+  // betsObject = convertOdds(betsObject);
   
   // sends email
   sendEmail(betsObject, mailList);

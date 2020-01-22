@@ -1,10 +1,8 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
-const url = 'https://www.actionnetwork.com/ncaab/best-lines';
-// const url = 'https://www.actionnetwork.com/nba/best-lines'
 
 
-scrapeWebData = async () => {
+const scrapeLines = async (sportsArr) => {
 
   getHTML = async (url) => {
 
@@ -43,10 +41,51 @@ scrapeWebData = async () => {
       games.push(gameObj);
     }
 
+    // used in time scraping to convert scraped date string to EST time
+    tzConversion = (time) => {
+
+      let newTime;
+      newTime = parseInt(time.slice(0, time.indexOf(':'))) -5;
+      if (time.includes('AM')) {
+        if (newTime > 0) {
+          return [newTime.toString(), 'AM'];
+        } else if (newTime === 0) {
+          return ['12', 'AM'];
+        } else {
+          return[(12 + newTime).toString(), 'PM']
+        }
+      } else {
+        if (newTime > 0) {
+          return [newTime.toString(), 'PM'];
+        } else if (newTime === 0) {
+          return ['12', 'PM'];
+        } else {
+          return[(12 + newTime).toString(), 'AM']
+        }
+      }
+
+    }
+
     // scrapes game times
     let timesHolder = [];
     $('.game-status-bar__gametime--positioned').each((i, elem) => {
-      timesHolder.push($(elem).text().slice(0, $(elem).text().indexOf(',')))
+
+      let time;
+      if (!$(elem).text().includes('on')) {
+        time = 'N/A';
+      } else if ($(elem).text().slice(0, $(elem).text().indexOf('on') - 1).length > 10) {
+        let temp = $(elem).text().slice(0, $(elem).text().indexOf('on') - 1);
+        temp = temp.slice(temp.indexOf(', ') + 2) + ' (' + temp.slice(temp.indexOf(' ') + 1, temp.indexOf(',')) + ')';
+        time = temp;
+        time = tzConversion(time)[0] + time.slice(time.indexOf(':'), time.indexOf(' ')) + tzConversion(time)[1] + ' ' + time.slice(time.indexOf('('));
+      } else {
+        let today = new Date().toLocaleDateString();
+        today = ' (' + today.slice(0, today.indexOf('/', 3)) + ')';
+        time = $(elem).text().slice(0, $(elem).text().indexOf('on') - 1) + today;
+        time = tzConversion(time)[0] + time.slice(time.indexOf(':'), time.indexOf(' ')) + tzConversion(time)[1] + ' ' + time.slice(time.indexOf('('));
+      }
+      timesHolder.push(time);
+
     })
 
     // merge game times
@@ -75,19 +114,44 @@ scrapeWebData = async () => {
 
     // tidy up 
     for (let game of games) {
-      game.time = game.time.slice(game.time.indexOf(' ') + 1);
+      // game.time = game.time.slice(game.time.indexOf(' ') + 1);
       game.awaySpread = game.awaySpread !== 'N/A' ? game.awaySpread.slice(0, game.awaySpread.indexOf('-', 1)) : 'N/A';
       game.homeSpread = game.homeSpread !== 'N/A' ? game.homeSpread.slice(0, game.homeSpread.indexOf('-', 1)) : 'N/A';
       game.overUnder = game.overUnder !== 'N/A' ? game.overUnder.slice(1, game.overUnder.indexOf('-')) : 'N/A';
     }
 
-    console.log(games)
+    return games;
 
   }
-  
-  const html = await getHTML(url);
-  getInfo(html);
+
+  let betsObj = {};
+
+  for (const sport of sportsArr) {
+    let url;
+    switch(sport) {
+      case 'americanfootball_nfl':
+        url = 'https://www.actionnetwork.com/nfl/best-lines';
+        break;
+      case 'basketball_nba':
+        url = 'https://www.actionnetwork.com/nba/best-lines';
+        break;
+      case 'basketball_ncaab':
+        url = 'https://www.actionnetwork.com/ncaab/best-lines';
+        break;
+      case 'icehockey_nhl':
+        url = 'https://www.actionnetwork.com/nhl/best-lines';
+        break;
+    }
+
+    const html = await getHTML(url);
+    betsObj[sport] = await getInfo(html);
+
+  }
+
+  // console.log(betsObj);
+  return betsObj;
 
 }
 
-scrapeWebData();
+exports.scrapeLines = scrapeLines;
+// scrapeWebData(['americanfootball_nfl', 'basketball_nba', 'basketball_ncaab']);

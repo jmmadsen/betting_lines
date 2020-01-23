@@ -20,11 +20,6 @@ const sendEmail = (betsObject, mailList) => {
   `
     <head>
       <style>
-      img {
-        border: none;
-        -ms-interpolation-mode: bicubic;
-        max-width: 100%; 
-      }
 
       body {
         background-color: #f6f6f6;
@@ -100,7 +95,7 @@ const sendEmail = (betsObject, mailList) => {
 
       .wrapper {
         box-sizing: border-box;
-        padding: 20px; 
+        padding: 7.5px; 
       }
 
       .content-block {
@@ -108,52 +103,8 @@ const sendEmail = (betsObject, mailList) => {
         padding-top: 10px;
       }
 
-      .footer {
-        clear: both;
-        margin-top: 10px;
+      h1, h2, h3 {
         text-align: center;
-        width: 100%; 
-      }
-        .footer td,
-        .footer p,
-        .footer span,
-        .footer a {
-          color: #999999;
-          font-size: 12px;
-          text-align: center; 
-      }
-
-      /* -------------------------------------
-          TYPOGRAPHY
-      ------------------------------------- */
-      h1,
-      h2,
-      h3,
-      h4 {
-        text-align: center;
-      }
-
-      h1 {
-        font-size: 35px;
-        font-weight: 300;
-        text-align: center;
-        text-transform: capitalize; 
-      }
-
-      p,
-      ul,
-      ol {
-        font-family: sans-serif;
-        font-size: 14px;
-        font-weight: normal;
-        margin: 0;
-        margin-bottom: 15px; 
-      }
-        p li,
-        ul li,
-        ol li {
-          list-style-position: inside;
-          margin-left: 5px; 
       }
 
       a {
@@ -161,104 +112,8 @@ const sendEmail = (betsObject, mailList) => {
         text-decoration: underline; 
       }
 
-      /* -------------------------------------
-          BUTTONS
-      ------------------------------------- */
-      .btn {
-        box-sizing: border-box;
-        width: 100%; }
-        .btn > tbody > tr > td {
-          padding-bottom: 15px; }
-        .btn table {
-          width: auto; 
-      }
-        .btn table td {
-          background-color: #ffffff;
-          border-radius: 5px;
-          text-align: center; 
-      }
-        .btn a {
-          background-color: #ffffff;
-          border: solid 1px #3498db;
-          border-radius: 5px;
-          box-sizing: border-box;
-          color: #3498db;
-          cursor: pointer;
-          display: inline-block;
-          font-size: 14px;
-          font-weight: bold;
-          margin: 0;
-          padding: 12px 25px;
-          text-decoration: none;
-          text-transform: capitalize; 
-      }
-
-      .btn-primary table td {
-        background-color: #3498db; 
-      }
-
-      .btn-primary a {
-        background-color: #3498db;
-        border-color: #3498db;
-        color: #ffffff; 
-      }
-
-      /* -------------------------------------
-          OTHER STYLES THAT MIGHT BE USEFUL
-      ------------------------------------- */
-      .last {
-        margin-bottom: 0; 
-      }
-
-      .first {
-        margin-top: 0; 
-      }
-
       .align-center {
         text-align: center; 
-      }
-
-      .align-right {
-        text-align: right; 
-      }
-
-      .align-left {
-        text-align: left; 
-      }
-
-      .clear {
-        clear: both; 
-      }
-
-      .mt0 {
-        margin-top: 0; 
-      }
-
-      .mb0 {
-        margin-bottom: 0; 
-      }
-
-      .preheader {
-        color: transparent;
-        display: none;
-        height: 0;
-        max-height: 0;
-        max-width: 0;
-        opacity: 0;
-        overflow: hidden;
-        mso-hide: all;
-        visibility: hidden;
-        width: 0; 
-      }
-
-      .powered-by a {
-        text-decoration: none; 
-      }
-
-      hr {
-        border: 0;
-        border-bottom: 1px solid #f6f6f6;
-        margin: 20px 0; 
       }
 
       /* -------------------------------------
@@ -371,7 +226,7 @@ const sendEmail = (betsObject, mailList) => {
 
     html = html + 
     `
-    <h3 class="align-center">${sportName}</h3>
+    <h1 class="align-center">${sportName}</h1>
     <table role="presentation" class="main">
       <tr>
         <th>Time</th>

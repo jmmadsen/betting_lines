@@ -10,8 +10,6 @@ If you would like to be added to the email list, let me know!
 
 Test locally by running ```heroku local```, use heroku cli
 
-https://cron-job.org/ is pinging every 15 minutes to prevent from going idle, can remove this once persistent storage is set up
-
 TODO 
 
 -------------------

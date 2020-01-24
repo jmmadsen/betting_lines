@@ -6,10 +6,6 @@ const { scrapeLines } = require('./scrapeLines');
 const { sendEmail } = require('./sendEmail');
 
 
-let mailList = ['jmmadsen16@gmail.com'];
-let sportsInSeason = ['americanfootball_nfl', 'basketball_nba', 'basketball_ncaab'];
-
-
 // called when server first starts
 (async function main() {
 
@@ -86,7 +82,7 @@ app.get('/mail_list', async (req, res) => {
     const result = await knex('emails_list').select();
     res.send(result);
   } catch(err) {
-    console.error(err);
+    res.send(err);
   }
 })
 
@@ -112,14 +108,33 @@ app.delete('/remove_email', async (req, res) => {
 
 // route to manually trigger testing while hosted in heroku
 app.post('/test_email', async (req, res) => {
+  try {
+    // fetch emails from DB
+    const mailList = await knex('emails_list').select().map(row => row.email);
 
-  // scrapes daily odds from website
-  let betsObject = await scrapeLines(sportsInSeason);
-  
-  // sends email
-  sendEmail(betsObject, mailList);
+    // fetch sports in season from DB
+    let sportsInSeason = await knex('sports_seasons')
+      .select('sport')
+      .where('startDate', '<=', new Date())
+      .andWhere('endDate', '>=', new Date())
+      .map(row => row.sport);
 
-  res.sendStatus(200);
+    // order of precedence which they appear in email
+    const sportsOrder = ['nfl', 'ncaaf', 'nba', 'ncaam', 'mlb', 'nhl'];
+    sportsInSeason.sort((a, b) => {
+      return sportsOrder.indexOf(a) - sportsOrder.indexOf(b);
+    });
+
+    // scrapes daily odds from website
+    let betsObject = await scrapeLines(sportsInSeason);
+    
+    // sends email
+    sendEmail(betsObject, mailList);
+
+    res.sendStatus(200);
+  } catch(err) {
+    res.send(err);
+  }
 })
 
 

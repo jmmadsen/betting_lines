@@ -139,17 +139,24 @@ const scrapeLines = async (sportsArr) => {
   for (const sport of sportsArr) {
     let url;
     switch(sport) {
-      case 'americanfootball_nfl':
+      case 'nfl':
         url = 'https://www.actionnetwork.com/nfl/best-lines';
         break;
-      case 'basketball_nba':
+      case 'nba':
         url = 'https://www.actionnetwork.com/nba/best-lines';
         break;
-      case 'basketball_ncaab':
+      case 'ncaam':
+      case 'ncaab':
         url = 'https://www.actionnetwork.com/ncaab/best-lines';
         break;
-      case 'icehockey_nhl':
+      case 'nhl':
         url = 'https://www.actionnetwork.com/nhl/best-lines';
+        break;
+      case 'ncaaf':
+        url = 'https://www.actionnetwork.com/ncaaf/best-lines';
+        break;
+      case 'mlb':
+        url = 'https://www.actionnetwork.com/mlb/best-lines';
         break;
     }
 

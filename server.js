@@ -43,23 +43,37 @@ app.use((req, res, next) => {
 // below is routing for express.js
 app.get('/', (req, res) => res.send('Betting lines is live!'));
 
-// sends current sportsInSeason array
-app.get('/sports_in_season', (req, res) => res.send(sportsInSeason));
+// send all from sports_seasons table
+app.get('/sports_in_season', async (req, res) => res.send(await knex('sports_seasons').select()));
 
-// adds sports to sportsInSeason array
-app.post('/add_sport_in_season', (req, res) => {
+// adds sport to sports_seasons table
+app.post('/add_sport_in_season', async (req, res) => {
   try {
-    sportsInSeason.push(req.query.sport);
+    const startDate = new Date(req.query.startDate);
+    const endDate = new Date(req.query.endDate);
+    await knex('sports_seasons').insert({ sport: req.query.sport, startDate, endDate });
     res.sendStatus(200);
   } catch(err) {
     res.send(err);
   }
 })
 
-// remove a sport from sportsInSeason array
-app.delete('/remove_sport_in_season', (req, res) => {
+// update the season dates for a sport
+app.put('/update_sport_season_dates', async (req, res) => {
   try {
-    sportsInSeason = sportsInSeason.filter(sport => sport !== req.query.sport);
+    const startDate = new Date(req.query.startDate);
+    const endDate = new Date(req.query.endDate);
+    await knex('sports_seasons').where('sport', req.query.sport).update({ startDate, endDate });
+    res.sendStatus(200);
+  } catch(err) {
+    res.send(err);
+  }
+})
+
+// remove a sport from sports_seasons table
+app.delete('/remove_sport_in_season', async (req, res) => {
+  try {
+    await knex('sports_seasons').delete().where('sport', req.query.sport);
     res.sendStatus(200);
   } catch(err) {
     res.send(err);
@@ -67,12 +81,9 @@ app.delete('/remove_sport_in_season', (req, res) => {
 })
 
 // sends current mailList array
-app.get('/mail_list', (req, res) => res.send(mailList));
-
-app.get('/mail_list_2', async (req, res) => {
+app.get('/mail_list', async (req, res) => {
   try {
     const result = await knex('emails_list').select();
-    console.log(result);
     res.send(result);
   } catch(err) {
     console.error(err);
@@ -80,19 +91,19 @@ app.get('/mail_list_2', async (req, res) => {
 })
 
 // adds email to emailList array
-app.post('/add_email', (req, res) => {
+app.post('/add_email', async (req, res) => {
   try {
-    mailList.push(req.query.email);
+    await knex('emails_list').insert({email: req.query.email});
     res.sendStatus(200);
   } catch(err) {
     res.send(err);
   }
 })
 
-// remove a email from mailList array
-app.delete('/remove_email', (req, res) => {
+// remove an email from mailList array
+app.delete('/remove_email', async (req, res) => {
   try {
-    mailList = mailList.filter(email => email !== req.query.email);
+    await knex('emails_list').delete().where('email', req.query.email);
     res.sendStatus(200);
   } catch(err) {
     res.send(err);

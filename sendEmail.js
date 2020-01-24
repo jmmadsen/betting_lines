@@ -2,7 +2,7 @@ let nodemailer = require('nodemailer');
 
 
 // gets heroku env variable
-const password = process.env.password;
+const password = process.env.PASSWORD;
 
 const sendEmail = (betsObject, mailList) => {
 

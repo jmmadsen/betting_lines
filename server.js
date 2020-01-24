@@ -1,12 +1,21 @@
 const express = require('express');
 const cron = require('node-cron');
 const app = express();
+const { knex } = require('./knexfile');
 const { scrapeLines } = require('./scrapeLines');
 const { sendEmail } = require('./sendEmail');
 
 
 let mailList = ['jmmadsen16@gmail.com'];
 let sportsInSeason = ['americanfootball_nfl', 'basketball_nba', 'basketball_ncaab'];
+
+
+// called when server first starts
+(async function main() {
+
+  app.listen(process.env.PORT, () => console.log(`Betting lines listening on port ${process.env.PORT}!`));
+
+})();
 
 // cron job to control when email is sent
 cron.schedule('00 00 10 * * *', async () => {
@@ -60,6 +69,16 @@ app.delete('/remove_sport_in_season', (req, res) => {
 // sends current mailList array
 app.get('/mail_list', (req, res) => res.send(mailList));
 
+app.get('/mail_list_2', async (req, res) => {
+  try {
+    const result = await knex('emails_list').select();
+    console.log(result);
+    res.send(result);
+  } catch(err) {
+    console.error(err);
+  }
+})
+
 // adds email to emailList array
 app.post('/add_email', (req, res) => {
   try {
@@ -92,4 +111,18 @@ app.post('/test_email', async (req, res) => {
   res.sendStatus(200);
 })
 
-app.listen(process.env.PORT, () => console.log(`Betting lines listening on port ${process.env.PORT}!`));
+
+// below terminate processes and connections
+process.on('uncaughtException', err => {
+  console.error(err);
+  process.exit();
+})
+
+process.on('SIGINT', async () => {
+  try {
+    await knex.destroy();
+    process.exit();
+  } catch(err) {
+    console.error(err);
+  }
+})

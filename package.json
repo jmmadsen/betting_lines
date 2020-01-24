@@ -9,6 +9,7 @@
     "axios": "^0.19.1",
     "cheerio": "^1.0.0-rc.3",
     "express": "^4.17.1",
+    "knex": "^0.20.8",
     "node-cron": "^2.0.3",
     "nodemailer": "^6.4.2"
   }

@@ -1,9 +1,5 @@
 # betting_lines
-Creates a mailing list to send daily sports betting information.
-
-I host this app on Heroku, so local environment variables are hidden. URL for my server is <a>https://agile-journey-20831.herokuapp.com/<a>. The Heroku ClearDB addon is used for my database.
-  
-If you would like to be added to the email list, let me know!
+Creates a mailing list to send daily sports betting information. I host this app with Heroku, and use ClearDB for the database. If you would like to be added to the email list, let me know!
   
   ------------------
   

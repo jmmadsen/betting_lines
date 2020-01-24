@@ -18,5 +18,4 @@ TODO
 
 - add Excel attachment with analytics (KenPom, etc.)
 - add dates to games that are not today
-- add Postgres 
 - create Docker image

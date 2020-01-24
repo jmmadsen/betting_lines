@@ -6,9 +6,8 @@ Creates a mailing list to send daily sports betting information. I host this app
 
 Test locally by running ```heroku local```, use heroku cli
 
-TODO 
-
 -------------------
+TODO 
 
 - add Excel attachment with analytics (KenPom, etc.)
 - add dates to games that are not today

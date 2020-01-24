@@ -1,9 +1,6 @@
 let nodemailer = require('nodemailer');
 
 
-// gets heroku env variable
-const password = process.env.password;
-
 const sendEmail = (betsObject, mailList) => {
 
   // login to email account created for sending daily lines
@@ -11,7 +8,7 @@ const sendEmail = (betsObject, mailList) => {
     service: 'gmail',
     auth: {
       user: 'daily.bets.2020@gmail.com',
-      pass: password
+      pass: process.env.PASSWORD
     }
   });
 
@@ -40,21 +37,7 @@ const sendEmail = (betsObject, mailList) => {
 
   for (const sport in betsObject) {
 
-    let sportName;
-    switch(sport) {
-      case 'americanfootball_nfl':
-        sportName = 'NFL';
-        break;
-      case 'basketball_nba':
-        sportName = 'NBA';
-        break;
-      case 'basketball_ncaab':
-        sportName = 'NCAAM';
-        break;
-      case 'icehockey_nhl':
-        sportName = 'NHL';
-        break;
-    }
+    let sportName = sport.toUpperCase();
 
     html = html + 
     `

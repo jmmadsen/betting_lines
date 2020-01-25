@@ -96,7 +96,10 @@ const sendEmail = (betsObject, mailList) => {
     bcc: mailList.join(', '),
     subject: `Bets for ${new Date().toLocaleDateString()}`,
     text: `Bets for ${new Date().toLocaleDateString()}`,
-    html: html
+    html: html,
+    attachments: [{
+      path: './analytics.xlsx'
+    }]
   };
 
   transporter.sendMail(mailOptions, function(error, info){

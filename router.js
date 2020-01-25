@@ -72,11 +72,41 @@ router.delete('/remove_email', async (req, res) => {
   }
 })
 
-// route to manually trigger testing while hosted in heroku
-router.post('/test_email', async (req, res) => {
+// route to manually trigger email
+router.post('/send_email', async (req, res) => {
   try {
     // fetch emails from DB
     const mailList = await knex('emails_list').select().map(row => row.email);
+
+    // fetch sports in season from DB
+    let sportsInSeason = await knex('sports_seasons')
+      .select('sport')
+      .where('startDate', '<=', new Date())
+      .andWhere('endDate', '>=', new Date())
+      .map(row => row.sport);
+
+    // order of precedence which they routerear in email
+    const sportsOrder = ['nfl', 'ncaaf', 'nba', 'ncaam', 'mlb', 'nhl'];
+    sportsInSeason.sort((a, b) => {
+      return sportsOrder.indexOf(a) - sportsOrder.indexOf(b);
+    });
+
+    // scrapes daily odds from website
+    let betsObject = await scrapeLines(sportsInSeason);
+    
+    // sends email
+    sendEmail(betsObject, mailList);
+
+    res.sendStatus(200);
+  } catch(err) {
+    res.send(err);
+  }
+})
+
+// route only send email to myself for production testing
+router.post('/send_email_myself', async (req, res) => {
+  try {
+    const mailList = ['jmmadsen16@gmail.com'];
 
     // fetch sports in season from DB
     let sportsInSeason = await knex('sports_seasons')

@@ -10,6 +10,8 @@ const { sendEmail } = require('./sendEmail');
 // called when server first starts
 (async function main() {
 
+  console.log('*********')
+  console.log(process.env.NODE_ENV);
   app.listen(process.env.PORT, () => console.log(`Betting lines listening on port ${process.env.PORT}!`));
 
 })();

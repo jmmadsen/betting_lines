@@ -3,8 +3,7 @@ const cron = require('node-cron');
 const app = express();
 const { knex } = require('./knexfile');
 const { router } = require('./router');
-const { scrapeLines } = require('./scrapeLines');
-const { sendEmail } = require('./sendEmail');
+const { emailProcess } = require('./emailProcess');
 
 
 // called when server first starts
@@ -16,34 +15,12 @@ const { sendEmail } = require('./sendEmail');
 
 // cron job to control when email is sent
 cron.schedule('00 00 10 * * *', async () => {
-
   try {
     console.log("Running cron job");
-    // fetch emails from DB
-    const mailList = await knex('emails_list').select().map(row => row.email);
-
-    // fetch sports in season from DB
-    let sportsInSeason = await knex('sports_seasons')
-      .select('sport')
-      .where('startDate', '<=', new Date())
-      .andWhere('endDate', '>=', new Date())
-      .map(row => row.sport);
-
-    // order of precedence which they routerear in email
-    const sportsOrder = ['nfl', 'ncaaf', 'nba', 'ncaam', 'mlb', 'nhl'];
-    sportsInSeason.sort((a, b) => {
-      return sportsOrder.indexOf(a) - sportsOrder.indexOf(b);
-    });
-
-    // scrapes daily odds from website
-    let betsObject = await scrapeLines(sportsInSeason);
-    
-    // sends email
-    sendEmail(betsObject, mailList);
+    await emailProcess(false);
   } catch(err) {
     res.send(err);
   }
-
 },{
   timezone: "America/New_York"
 });

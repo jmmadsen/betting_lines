@@ -1,7 +1,5 @@
 let knex;
 
-console.log('****************')
-console.log(process.env.NODE_ENV)
 if (process.env.NODE_ENV === `production`) {
   knex = require('knex')({
     client: 'mysql',

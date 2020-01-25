@@ -18,6 +18,7 @@ const { sendEmail } = require('./sendEmail');
 cron.schedule('00 00 10 * * *', async () => {
 
   try {
+    console.log("Running cron job");
     // fetch emails from DB
     const mailList = await knex('emails_list').select().map(row => row.email);
 
@@ -39,8 +40,6 @@ cron.schedule('00 00 10 * * *', async () => {
     
     // sends email
     sendEmail(betsObject, mailList);
-    
-    res.sendStatus(200);
   } catch(err) {
     res.send(err);
   }

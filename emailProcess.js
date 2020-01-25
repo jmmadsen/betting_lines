@@ -1,8 +1,8 @@
 const { knex } = require('./knexfile');
 const { scrapeLines } = require('./scrapers/scrapeLines');
 const { scrapeKenPom } = require('./scrapers/scrapeKenPom');
-const { createExcel } = require('./createExcel');
-const { sendEmail } = require('./sendEmail');
+const { createExcel } = require('./processes/createExcel');
+const { sendEmail } = require('./processes/sendEmail');
 
 
 const emailProcess = async (isTest) => {

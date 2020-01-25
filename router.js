@@ -2,6 +2,8 @@ const { knex } = require('./knexfile');
 const express = require('express');
 const router = express.Router();
 const { scrapeLines } = require('./scrapeLines');
+const { scrapeKenPom } = require('./scrapeKenPom');
+const { createExcel } = require('./createExcel');
 const { sendEmail } = require('./sendEmail');
 
 
@@ -122,7 +124,13 @@ router.post('/send_email_myself', async (req, res) => {
     });
 
     // scrapes daily odds from website
-    let betsObject = await scrapeLines(sportsInSeason);
+    const betsObject = await scrapeLines(sportsInSeason);
+
+    // scrapes knepom
+    const kenPom = await scrapeKenPom();
+
+    // creates csv file
+    await createExcel([kenPom]);
     
     // sends email
     sendEmail(betsObject, mailList);

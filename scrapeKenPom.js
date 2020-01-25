@@ -49,7 +49,36 @@ const scrapeKenPom = async () => {
       }
     })
 
-    return kenPomArr;
+    // creates kenpom object for excel
+    let kenPomObj = {
+      name: 'KenPom Ratings',
+      columns: [
+        { header: 'Rank', key: 'rank', width: 5 },
+        { header: 'Team', key: 'team', width: 15 },
+        { header: 'Conference', key: 'conference', width: 10 },
+        { header: 'Win/Loss', key: 'winLoss', width: 10 },
+        { header: 'Adj. EM', key: 'adjEM', width: 10 },
+        { header: 'Adj. O', key: 'adjO', width: 10 },
+        { header: 'Adj. O Rank', key: 'adjORank', width: 12 },
+        { header: 'Adj. D', key: 'adjD', width: 10 },
+        { header: 'Adj. D Rank', key: 'adjDRank', width: 12 },
+        { header: 'Adj. T', key: 'adjT', width: 10 },
+        { header: 'Adj. T Rank', key: 'adjTRank', width: 12 },
+        { header: 'Adj. Luck', key: 'adjLuck', width: 10 },
+        { header: 'Adj. Luck Rank', key: 'adjLuckRank', width: 12 },
+        { header: 'SoS Adj. EM', key: 'strengthAdjEM', width: 12 },
+        { header: 'SoS Adj. EM Rank', key: 'strengthAdjEMRank', width: 15 },
+        { header: 'SoS Opp. O', key: 'strengthOppO', width: 12 },
+        { header: 'SoS Opp. O Rank', key: 'strengthOppORank', width: 15 },
+        { header: 'SoS Opp. D', key: 'strengthOppD', width: 12 },
+        { header: 'SoS Opp. D Rank', key: 'strengthOppDRank', width: 15 },
+        { header: 'NCSOS Adj. EM', key: 'ncsosAdjEM', width: 12 },
+        { header: 'NCSOS Adj. EM Rank', key: 'ncsosAdjEMRank', width: 15 }
+      ],
+      data: kenPomArr
+    };
+
+    return kenPomObj;
 
   } catch(err) {
 

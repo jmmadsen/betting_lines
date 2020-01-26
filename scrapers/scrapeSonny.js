@@ -112,7 +112,8 @@ const scrapeSonny = async () => {
     tempHolder7 = chunk(tempHolder6, 7);
 
     // removes extraneous at end, data cleansed
-    finalData = tempHolder7.slice(0, tempHolder7.length - 1);
+    let finalData = tempHolder7.slice(0, tempHolder7.length - 1);
+    finalData[0][1] = finalData[0][1].slice(finalData[0][1].indexOf(' ') + 1);
     
     // create sonny array
     const sonnArr = finalData.map(team => {

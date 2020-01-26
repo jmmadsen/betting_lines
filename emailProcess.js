@@ -1,6 +1,7 @@
 const { knex } = require('./knexfile');
 const { scrapeLines } = require('./scrapers/scrapeLines');
 const { scrapeKenPom } = require('./scrapers/scrapeKenPom');
+const { scrapeSonny } = require('./scrapers/scrapeSonny');
 const { createExcel } = require('./processes/createExcel');
 const { sendEmail } = require('./processes/sendEmail');
 
@@ -39,6 +40,8 @@ const emailProcess = async (isTest) => {
     if (sportsInSeason.includes('ncaam')) {
       const kenPom = await scrapeKenPom();
       excelData.push(kenPom);
+      const sonny = await(scrapeSonny());
+      excelData.push(sonny);
     }
 
     // creates csv file

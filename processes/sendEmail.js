@@ -85,7 +85,7 @@ const sendEmail = (betsObject, mailList) => {
     <br>
     <center>
       <h4>Email jmmadsen16@gmail.com to request features, and to add or remove people from this email list</h4>
-      <h5>Coming Soon: Excel attachment with analytics for day's games (i.e. KenPom, etc.)</h5>
+      <h5>Coming Soon: Updates to Excel file with macros to compare teams, and more website data</h5>
       <a href="https://github.com/jmmadsen/betting_lines">Click here to see the code for this application</a>
     </center>
     </body>

@@ -9,6 +9,6 @@ Test locally by running ```heroku local```, use heroku cli
 -------------------
 TODO 
 
-- add Excel attachment with analytics (KenPom, etc.)
+- continue to update Excel attachment with more scraped sites, macros, etc.
 - add dates to games that are not today
 - create Docker image

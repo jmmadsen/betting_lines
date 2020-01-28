@@ -1,5 +1,5 @@
 # betting_lines
-Creates a mailing list to send daily sports betting information. I host this app with Heroku using a Node.js server to scrape data and send emails, and a ClearDB database. If you would like to be added to the email list, let me know!
+Creates a mailing list to send daily sports betting information. I host this app with Heroku using a Node.js server to scrape data and send emails, and a MySQL DB. If you would like to be added to the email list, let me know!
   
   ------------------
   

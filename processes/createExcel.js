@@ -22,8 +22,12 @@ const createExcel = async (scrapedSites) => {
     }
   }
 
+  // create filename, can't use "/" to name excel file
+  let date = new Date().toLocaleDateString().split('/').join('-');
+  const fileName = `${date} Analytics.xlsx`;
+
   // write xlsx to server
-  await workbook.xlsx.writeFile('analytics.xlsx');
+  await workbook.xlsx.writeFile(fileName);
 
 }
 

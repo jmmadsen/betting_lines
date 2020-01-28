@@ -1,3 +1,4 @@
+const fs = require('fs');
 let nodemailer = require('nodemailer');
 
 
@@ -91,14 +92,18 @@ const sendEmail = (betsObject, mailList) => {
     </body>
   `
 
-  var mailOptions = {
+  // find the excel file created in today's process
+  let date = new Date().toLocaleDateString().split('/').join('-');
+  const fileName = `${date} Analytics.xlsx`;
+
+  let mailOptions = {
     from: 'daily.bets.2020@gmail.com',
     bcc: mailList.join(', '),
     subject: `Bets for ${new Date().toLocaleDateString()}`,
     text: `Bets for ${new Date().toLocaleDateString()}`,
     html: html,
     attachments: [{
-      path: './analytics.xlsx'
+      path: `./${fileName}`
     }]
   };
 
@@ -106,6 +111,12 @@ const sendEmail = (betsObject, mailList) => {
     if (error) {
       console.log(error);
     } else {
+      // deletes excel analytics file from server after email sends
+      fs.unlink(fileName, (err) => {
+        if (err) {
+          console.error(err);
+        }
+      })
       console.log('Email sent: ' + info.response);
     }
   });

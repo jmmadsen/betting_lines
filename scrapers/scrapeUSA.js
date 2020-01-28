@@ -6,19 +6,37 @@ const scrapeUSA = async () => {
 
   try {
 
-    // scrape massey
-    const url = 'https://www.https://https://www.usatoday.com/sports/ncaab/sagarin/#Predictions_with_Totals.com/m-basket.htm.com/cb/ncaa-d1/games';
+    // scrape usa
+    const url = 'https://www.usatoday.com/sports/ncaab/sagarin/#Predictions_with_Totals';
     const result = await axios.get(url);
     const html = result.data;
     const $ = cheerio.load(html);
 
     // pull raw data from html
-    let statsHolder = [];
-    // $('font').each((i, elem) => {
-    //   console.log($(elem).text());
-    //   statsHolder.push($(elem).text());
-    // })
-    $('b').text()
+    let rawData = [];
+    $('font').each((i, elem) => {
+      rawData.push($(elem).text());
+    })
+
+    // selects long strings that contain all the data
+    let tempHolder = rawData.filter(item => item.length > 100);
+    
+    // more cleansing
+    let tempHolder2 = [];
+    for (let string of tempHolder) {
+      let newItem = '';
+      for (let x = 0; x < string.length; x++) {
+        if (string[x] !== ' ') {
+          newItem += string[x];
+        } else if (string[x + 1] !== ' ') {
+          newItem += string[x];
+        }
+      }
+      tempHolder2.push(newItem);
+    }
+
+    tempHolder3 = tempHolder2.filter(item => item.length > 200);
+    console.log(tempHolder3)
 
   } catch(err) {
     console.error(err);

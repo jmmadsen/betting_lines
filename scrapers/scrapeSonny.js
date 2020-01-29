@@ -129,7 +129,7 @@ const scrapeSonny = async () => {
     });
 
     const sonnyObj = {
-      name :'Sonny Power Ratings',
+      name : 'Sonny Power Ratings',
       columns: [
         { header: 'Rank', key: 'rank', width: 5 },
         { header: 'Team', key: 'team', width: 15 },

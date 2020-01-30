@@ -25,27 +25,27 @@ const scrapeKenPom = async () => {
     // create kenpom array
     const kenPomArr = chunkedStats.map(team => {
       return {
-        rank: team[0],
+        rank: parseInt(team[0], 10),
         team: team[1],
         conference: team[2],
         winLoss: team[3],
-        adjEM: team[4],
-        adjO: team[5],
-        adjORank: team[6],
-        adjD: team[7],
-        adjDRank: team[8],
-        adjT: team[9],
-        adjTRank: team[10],
-        adjLuck: team[11],
-        adjLuckRank: team[12],
-        strengthAdjEM: team[13],
-        strengthAdjEMRank: team[14],
-        strengthOppO: team[15],
-        strengthOppORank: team[16],
-        strengthOppD: team[17],
-        strengthOppDRank: team[18],
-        ncsosAdjEM: team[19],
-        ncsosAdjEMRank: team[20]
+        adjEM: parseFloat(team[4]),
+        adjO: parseFloat(team[5]),
+        adjORank: parseInt(team[6], 10),
+        adjD: parseFloat(team[7]),
+        adjDRank: parseInt(team[8], 10),
+        adjT: parseFloat(team[9]),
+        adjTRank: parseInt(team[10], 10),
+        adjLuck: parseFloat(team[11]),
+        adjLuckRank: parseInt(team[12], 10),
+        strengthAdjEM: parseFloat(team[13]),
+        strengthAdjEMRank: parseInt(team[14], 10),
+        strengthOppO: parseFloat(team[15]),
+        strengthOppORank: parseInt(team[16], 10),
+        strengthOppD: parseFloat(team[17]),
+        strengthOppDRank: parseInt(team[18], 10),
+        ncsosAdjEM: parseFloat(team[19]),
+        ncsosAdjEMRank: parseInt(team[20], 10)
       }
     })
 

@@ -2,6 +2,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const chunk = require('lodash/chunk');
 
+
 const scrapeSonny = async () => {
 
   try {
@@ -118,13 +119,13 @@ const scrapeSonny = async () => {
     // create sonny array
     const sonnArr = finalData.map(team => {
       return {
-        rank: team[0],
+        rank: parseInt(team[0], 10),
         team: team[1],
-        wins: team[2],
-        loss: team[3],
-        ties: team[4],
-        sos: team[5],
-        pr: team[6]
+        wins: parseInt(team[2], 10),
+        loss: parseInt(team[3], 10),
+        ties: parseInt(team[4], 10),
+        sos: parseFloat(team[5]),
+        pr: parseFloat(team[6])
       }
     });
 
@@ -135,7 +136,7 @@ const scrapeSonny = async () => {
         { header: 'Team', key: 'team', width: 15 },
         { header: 'Wins', key: 'wins', width: 5 },
         { header: 'Losses', key: 'loss', width: 5 },
-        { header: 'Ties', key: 'tie', width: 5 },
+        { header: 'Ties', key: 'ties', width: 5 },
         { header: 'Strength of Schedule', key: 'sos', width: 15 },
         { header: 'Power Ranking', key: 'pr', width: 10 }
       ],

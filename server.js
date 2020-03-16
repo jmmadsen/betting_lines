@@ -17,7 +17,7 @@ const { emailProcess } = require('./emailProcess');
 cron.schedule('00 00 10 * * *', async () => {
   try {
     console.log("Running cron job");
-    await emailProcess(false);
+    // await emailProcess(false);
   } catch(err) {
     res.send(err);
   }

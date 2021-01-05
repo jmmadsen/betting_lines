@@ -6,7 +6,7 @@
     "node": "12.4.0"
   },
   "dependencies": {
-    "axios": "^0.19.1",
+    "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.3",
     "exceljs": "^3.6.1",
     "express": "^4.17.1",
